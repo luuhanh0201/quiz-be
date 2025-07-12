@@ -15,13 +15,13 @@ export const signUp = async (req, res) => {
         const existingUser = await checkExistUser(username, email);
         if (existingUser) {
             if (existingUser.username === username) {
-                return res.json({
-                    mess: "Username is already in use.",
+                return res.status(400).json({
+                    message: { username: "Username is already in use." },
                 });
             }
             if (existingUser.email === email) {
-                return res.json({
-                    mess: "Email is already in use.",
+                return res.status(400).json({
+                    message: { email: "Email is already in use." },
                 });
             }
         }
@@ -48,22 +48,22 @@ export const signIn = async (req, res) => {
     try {
         const user = await getUserByUsername(username);
         if (!user) {
-            return res.status(400).json({ message: "Sai username" });
+            return res.status(400).json({ message: "Invalid username or password" });
         }
         const isPassword = await bcryptjs.compare(password, user.password);
         if (!isPassword) {
-            return res.status(400).json({ message: "Sai password" });
+            return res.status(400).json({ message: "Invalid username or password" });
         }
 
         if (user.is_banned) {
-            return res.status(400).json({ message: "Tài khoản này đã bị khoá" });
+            return res.status(400).json({ message: "This account has been banned" });
         }
         user.password = undefined;
         console.log(user);
         const SECRET_KEY = process.env.SECRET_KEY;
         const accessToken = jwt.sign({ id: user.id }, SECRET_KEY, { expiresIn: "1d" });
         return res.json({
-            message: "Đăng nhập thành công",
+            message: "Login successful",
             user: {
                 user_id: user.user_id,
                 username: user.username,
@@ -74,6 +74,6 @@ export const signIn = async (req, res) => {
             },
         });
     } catch (error) {
-        res.status(500).json({ message: "error", error: error.message });
+        res.status(500).json({ message: "error ABC", error: error.message });
     }
 };
