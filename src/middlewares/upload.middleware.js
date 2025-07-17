@@ -8,7 +8,7 @@ const __dirname = path.dirname(__filename);
 
 const uploadPath = path.join(__dirname, "..", "uploads");
 
-// Tạo thư mục nếu chưa có
+
 if (!fs.existsSync(uploadPath)) {
     fs.mkdirSync(uploadPath, { recursive: true });
 }
