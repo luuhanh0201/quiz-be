@@ -59,18 +59,18 @@ export const signIn = async (req, res) => {
             return res.status(400).json({ message: "This account has been banned" });
         }
         user.password = undefined;
-        console.log(user);
         const SECRET_KEY = process.env.SECRET_KEY;
-        const accessToken = jwt.sign({ id: user.id }, SECRET_KEY, { expiresIn: "1d" });
+        const accessToken = jwt.sign({ user_id: user.user_id }, SECRET_KEY, { expiresIn: "1d" });
+        console.log(accessToken);
         return res.json({
             message: "Login successful",
+            token: accessToken,
             user: {
                 user_id: user.user_id,
                 username: user.username,
                 email: user.email,
                 role: user.role,
                 avatar: user.avatar,
-                token: accessToken,
             },
         });
     } catch (error) {
