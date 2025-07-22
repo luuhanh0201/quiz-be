@@ -4,13 +4,14 @@ import { createQuizService, deleteQuizByIdService, getQuizzesByIdUserService, up
 export const createQuizController = async (req, res) => {
     try {
         const userId = req.user.user_id;
-        const { title, description, tag, isPublic, coverImage } = req.body;
-
+        const { title, description, tags } = req.body;
+        const coverImage = req.file ? `/uploads/${req.file.filename}` : null
+        const isPublic = req.body.isPublic === "true" || req.body.isPublic === true ? 1 : 0;
         const result = await createQuizService({
             userId,
             title,
             description,
-            tag,
+            tags,
             isPublic,
             coverImage
         });
