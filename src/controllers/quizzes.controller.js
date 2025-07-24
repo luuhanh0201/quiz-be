@@ -1,6 +1,34 @@
+import { getAllQuizzesModel } from "../models/quizzes.model.js";
 import { createQuizService, deleteQuizByIdService, getQuizzesByIdUserService, updateQuizService } from "../services/quizzes.service.js";
 
-
+export const getQuizzesByUserIdController = async (req, res) => {
+    try {
+        const userId = req.user.user_id;
+        const quizzes = await getQuizzesByIdUserService(userId);
+        return res.status(200).json({
+            message: "Get quizzes successful",
+            data: quizzes,
+        });
+    } catch (error) {
+        return res.status(500).json({
+            message: error,
+        });
+    }
+};
+export const getAllQuizzesController = async (req, res) => {
+    try {
+        const quizzes = await getAllQuizzesModel([]);
+        // console.log(quizzes)
+        return res.status(200).json({
+            message: "Get all public quizzes successfully",
+            data: [quizzes],
+        });
+    } catch (error) {
+        return res.status(500).json({
+            message: "Get all error:" + error,
+        });
+    }
+};
 export const createQuizController = async (req, res) => {
     try {
         const userId = req.user.user_id;
@@ -21,20 +49,7 @@ export const createQuizController = async (req, res) => {
     }
 };
 
-export const getQuizzesByUserIdController = async (req, res) => {
-    try {
-        const userId = req.user.user_id;
-        const quizzes = await getQuizzesByIdUserService(userId);
-        return res.status(200).json({
-            message: "Get quizzes successful",
-            data: quizzes,
-        });
-    } catch (error) {
-        return res.status(500).json({
-            message: error,
-        });
-    }
-};
+
 export const deleteQuizController = async (req, res) => {
     const quizId = req.params.id;
     const userId = req.user.user_id;

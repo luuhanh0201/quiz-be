@@ -10,6 +10,18 @@ export const getQuizzesByIdUserModel = async (userId) => {
     const result = await dbQuery(query, [userId]);
     return result;
 };
+export const getAllQuizzesModel = async () => {
+    const query = `
+    SELECT quizzes.*, users.username
+    FROM quizzes
+    JOIN users ON quizzes.user_id = users.user_id WHERE quizzes.is_public = 1;
+  `;
+    const rows = await dbQuery(query);
+    return rows;
+};
+
+
+
 export const deleteQuizByIdModel = async (quizId, userId) => {
     const query = 'DELETE FROM quizzes WHERE id = ? AND user_id = ?';
     const result = await dbQuery(query, [quizId, userId]);
