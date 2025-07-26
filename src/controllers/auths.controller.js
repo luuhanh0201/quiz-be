@@ -60,7 +60,7 @@ export const signIn = async (req, res) => {
         }
         user.password = undefined;
         const SECRET_KEY = process.env.SECRET_KEY;
-        const accessToken = jwt.sign({ user_id: user.user_id }, SECRET_KEY, { expiresIn: "1d" });
+        const accessToken = jwt.sign({ user_id: user.user_id }, SECRET_KEY, { expiresIn: "20d" });
       
         return res.json({
             message: "Login successful",
