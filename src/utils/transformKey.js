@@ -11,3 +11,12 @@ export const dbQuery = async (sql, params = []) => {
     }
 };
 
+export const dbMutate = async (sql, params = []) => {
+    const [result] = await connection.query(sql, params);
+
+    return {
+        insertId: result?.insertId || null,
+        affectedRows: result?.affectedRows || null,
+    }
+};
+

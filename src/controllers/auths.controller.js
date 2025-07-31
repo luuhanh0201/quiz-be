@@ -47,6 +47,7 @@ export const signIn = async (req, res) => {
 
     try {
         const user = await getUserByUsername(username);
+        console.log(user)
         if (!user) {
             return res.status(400).json({ message: "Invalid username or password" });
         }
@@ -60,8 +61,8 @@ export const signIn = async (req, res) => {
         }
         user.password = undefined;
         const SECRET_KEY = process.env.SECRET_KEY;
-        const accessToken = jwt.sign({ user_id: user.user_id }, SECRET_KEY, { expiresIn: "20d" });
-      
+        const accessToken = jwt.sign({ user_id: user.user_id }, SECRET_KEY, { expiresIn: "1d" });
+
         return res.json({
             message: "Login successful",
             token: accessToken,
@@ -74,6 +75,6 @@ export const signIn = async (req, res) => {
             },
         });
     } catch (error) {
-        res.status(500).json({ message: "error ABC", error: error.message });
+        res.status(500).json({ message: "error auths", error: error.message });
     }
 };

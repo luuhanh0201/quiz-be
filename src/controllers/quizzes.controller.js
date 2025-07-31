@@ -91,7 +91,6 @@ export const updateQuizController = async (req, res) => {
     let { title, description, tag, isPublic, coverImage } = req.body;
     try {
         const quizzes = await getQuizzesByIdUserService(userId);
-        console.log(quizzes)
         const quizExists = quizzes.find((quiz) => quiz.id === Number(quizId));
         if (!coverImage || coverImage.trim() === "") {
             coverImage = quizExists.coverImage

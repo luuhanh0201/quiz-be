@@ -7,6 +7,6 @@ const routers = express.Router();
 
 routers.get("/profile-users", isAuthenticated, getAll);
 routers.get("/profile-user", isAuthenticated, getOneUser);
-routers.put("/profile-user/edit/:id", upload.single("avatar"), updateUser);
+routers.put("/profile-user/edit/:id", upload.single("avatar"), isAuthenticated, updateUser);
 
 export default routers;

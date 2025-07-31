@@ -11,7 +11,6 @@ export const getAll = async (req, res) => {
 export const getOneUser = async (req, res) => {
     try {
         const userId = req.user.user_id;
-
         const profileUser = await getUserById(userId);
         delete profileUser.password;
         delete profileUser.role;

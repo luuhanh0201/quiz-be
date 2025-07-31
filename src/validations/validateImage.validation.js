@@ -14,7 +14,6 @@ export const validateImage = (req, res, next) => {
     if (file.size > maxSize) {
         return res.status(400).json({ message: "Maximum size of 2MB." });
     }
-console.log(123)
     next();
 };
 
